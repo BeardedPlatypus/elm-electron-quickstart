@@ -62,14 +62,15 @@ var rendererConfig =
         , target: "electron-renderer"
         , output: { path: path.resolve(__dirname, "target")
                   , filename: "[name].js"
+                  , publicPath: ""
                   }
         , plugins: commonRendererPlugins.concat( MODE === "development"
                                                       ? developmentRendererPlugins
                                                       : productionRendererPlugins)
         , module: { rules: [ { test: [/\.elm$/]
                              , exclude: [/elm-stuff/, /node_modules/]
-                             , use: [ { loader: "elm-hot-webpack-loader" }
-                                    , { loader: "elm-webpack-loader"
+                             , use: [ //{ loader: "elm-hot-webpack-loader" },
+                                      { loader: "elm-webpack-loader"
                                       , options: MODE === "production" 
                                                       ? {} 
                                                       : { debug: true
@@ -81,7 +82,7 @@ var rendererConfig =
                            , { test: /\.ts$/, loader: "ts-loader" }
                            ]
                   }
-        , resolve: { extensions: [".js", ".ts", ".elm"] }
+        , resolve: { extensions: [".ts", ".elm", ".js"] }
         , serve: { inline: true
                  , stats: "errors-only"
                  }
